@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        Film childrenFilm = new Film("Willy Wonka and the Chocolate Factory", 5);
+        
+        System.out.println("How old are you? ");
+        int age = Integer.valueOf(scanner.nextLine());
+        System.out.println("");
+        
+        if (age >= childrenFilm.ageRating()) {
+            System.out.println("You may watch the film " + childrenFilm.name());
+        } else {
+            System.out.println("You may not watch the film " + childrenFilm.name());
+        }
+        
+    }
+}
+
+public class Film {
+    
+    private String name;
+    private int ageRating;
+    
+    public Film(String filmName, int filmAgeRating) {
+        this.name = filmName;
+        this.ageRating = filmAgeRating;
+    }
+    
+    public String name() {
+        return this.name;
+    }
+    
+    public int ageRating() {
+        return this.ageRating;
+    }  
+    
+}
