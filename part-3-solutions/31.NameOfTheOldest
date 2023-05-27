@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class NameOfTheOldest {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int oldest = 0;
+        String name = "father";
+
+        while (true) {
+            String input = scanner.nextLine();
+            
+            if (input.equals("")) {
+                
+                break;
+            } 
+            
+            String[] people = input.split(",");
+            for (int i = 0; i < people.length; i++) {
+                if (i % 2 == 1) {
+                    if (Integer.valueOf(people[i]) > oldest) { 
+                        oldest = Integer.valueOf(people[i]);
+                        name = people[i - 1];
+                    } else {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+            }   
+        } 
+        System.out.println("Name of the oldest: " + name);  
+    }
+}
