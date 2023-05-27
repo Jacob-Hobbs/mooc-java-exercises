@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AverageOfAList {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        ArrayList<Integer> numbers = new ArrayList<>();
+
+        while (true) {
+            int input = Integer.valueOf(scanner.nextLine());
+            
+            if (input == -1) {
+                break;
+            } else {
+                numbers.add(input);
+            }
+        }
+        
+        int sum = 0;
+        int count = 0;
+        
+        for (int input: numbers) {
+            count += 1;
+            sum += input;
+        }
+        
+        double avg = (double) sum / count;
+        
+        System.out.println("Average: " + avg);
+        
+    }
+}
