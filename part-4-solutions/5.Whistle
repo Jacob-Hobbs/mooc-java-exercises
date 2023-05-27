@@ -1,0 +1,26 @@
+public class Main {
+
+    public static void main(String[] args) {
+
+        Whistle duckWhistle = new Whistle("Quack");
+        Whistle roosterWhistle = new Whistle("Cockadoodledoo");
+
+        duckWhistle.sound();
+        roosterWhistle.sound();
+        duckWhistle.sound();
+    }
+}
+
+public class Whistle {
+    
+    private String sound;
+    
+    public Whistle(String whistleSound) {
+        this.sound = whistleSound;
+    }
+    
+    public void sound() {
+        System.out.println(sound);
+    }
+    
+}
