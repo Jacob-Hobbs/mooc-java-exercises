@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class MainProgram {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        Statistics statisticsOne = new Statistics();
+        Statistics statisticsTwo = new Statistics();
+        Statistics statisticsThree = new Statistics();
+        System.out.println("Enter numbers:");
+        while(true) {
+            int num = Integer.valueOf(scanner.nextLine());
+            
+            if (num == -1) {
+                break;
+            } else if (num % 2 == 0){
+                statisticsOne.addNumber(num);
+                statisticsTwo.addNumber(num);
+            } else {
+                statisticsOne.addNumber(num);
+                statisticsThree.addNumber(num);
+            }
+        }
+        
+        System.out.println("Count: " + statisticsOne.getCount());
+        System.out.println("Sum: " + statisticsOne.sum());
+        System.out.println("Average: " + statisticsOne.average());
+        System.out.println("Sum of even numbers: " + statisticsTwo.sum());
+        System.out.println("Sum of even numbers: " + statisticsThree.sum());
+    }
+}
+
+public class Statistics {
+    
+    private int count;
+    private int sum;
+    
+    public Statistics() {
+        this.count = count;
+    }
+    
+    public void addNumber(int number) {
+        this.count += 1;
+        this.sum += number;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+    
+    public int sum() {
+        return this.sum;
+    }
+    
+    public double average() {
+        if (count == 0) {
+            return 0;
+        } else {
+            return this.sum() / (double) count;
+        }
+    }
+}
