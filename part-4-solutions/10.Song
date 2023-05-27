@@ -1,0 +1,28 @@
+public class Main {
+
+  public static void main(String[] args) {
+      
+      Song berry = new Song("Johnny Be Goode", 10910);
+      
+      System.out.println("The song " + berry.name() + " has a length of " + berry.length() + " seconds.");
+  }
+}
+
+public class Song {
+    
+    private String name;
+    private int length;
+    
+    public Song(String initialName, int initialLength) {
+        this.name = initialName;
+        this.length = initialLength;
+    }
+    
+    public String name() {
+        return this.name;
+    }
+    
+    public int length() {
+        return this.length;
+    }
+}
