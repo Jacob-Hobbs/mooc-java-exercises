@@ -1,0 +1,25 @@
+public class Main {
+
+    public static void main(String[] args) {
+        Product bannanas = new Product("Bannana", 2.54, 24);
+        
+        bannanas.printProduct();
+    }
+}
+
+public class Product {
+    
+    private double price;
+    private int quantity;
+    private String name;
+    
+    public Product(String initialName, double initialPrice, int initialQuantity) {
+        this.price = initialPrice;
+        this.quantity = initialQuantity;
+        this.name = initialName;
+    }
+    
+    public void printProduct() {
+        System.out.println(name + ", price " + price + ", " + quantity + " pcs");
+    }
+}
