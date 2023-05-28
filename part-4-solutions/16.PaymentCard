@@ -1,0 +1,81 @@
+import java.util.Scanner;
+
+public class MainProgram {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Create Paul's card. The opening balance of the card is 20 euros
+        PaymentCard paulsCard = new PaymentCard(20);
+        
+        // Create Matt's card. The opening balance of the card is 30 euros
+        PaymentCard mattsCard = new PaymentCard(30);
+        
+        // Paul eats heartily
+        paulsCard.eatHeartily();
+        
+        // Matt eats affordably
+        mattsCard.eatAffordably();
+        
+        // The cards' values are printed (each on its own line, with the cardholder name at the beginning of it)
+        System.out.println("Paul: " + paulsCard.toString());
+        System.out.println("Matt: " + mattsCard.toString());
+        
+        // Paul tops up 20 euros
+        paulsCard.addMoney(20);
+        
+        // Matt eats heartily
+        mattsCard.eatHeartily();
+        
+        // The cards' values are printed (each on its own line, with the cardholder name at the beginning of it)
+        System.out.println("Paul: " + paulsCard.toString());
+        System.out.println("Matt: " + mattsCard.toString());
+        
+        // Paul eats affordably
+        paulsCard.eatAffordably();
+        
+        // Paul eats affordably
+        paulsCard.eatAffordably();
+        
+        // Matt tops up 50 euros
+        mattsCard.addMoney(50);
+        
+        // The cards' values are printed (each on its own line, with the cardholder name at the beginning of it)
+        System.out.println("Paul: " + paulsCard.toString());
+        System.out.println("Matt: " + mattsCard.toString());
+
+    }
+}
+
+public class PaymentCard {
+    
+    private double balance;
+    
+    public PaymentCard(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    public void eatAffordably() {
+        if (this.balance >= 2.60) {
+            this.balance -= 2.60; 
+        }
+    }
+    
+    public void eatHeartily() {
+        if (this.balance >= 4.60) {
+            this.balance -= 4.60; 
+        }
+    }
+    
+    public void addMoney(double initialAdd) {
+        for (int i = 0; i < initialAdd; i++) {
+            if (this.balance < 150) {
+                this.balance += 1;
+            } 
+        }
+    }
+    
+    public String toString() {
+        return "The card has a balance of " + this.balance + " euros";
+    }
+}
