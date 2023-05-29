@@ -1,0 +1,40 @@
+import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class NumbersFromAFile {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        ArrayList<Integer> nums = new ArrayList<>();
+
+        System.out.println("File? ");
+        String file = scanner.nextLine();
+        System.out.println("Lower bound? ");
+        int lowerBound = Integer.valueOf(scanner.nextLine());
+        System.out.println("Upper bound? ");
+        int upperBound = Integer.valueOf(scanner.nextLine());
+        
+        try (Scanner scannerTwo = new Scanner(Paths.get(file))) {
+            while(scannerTwo.hasNextLine()) {
+                nums.add(Integer.valueOf(scannerTwo.nextLine()));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        int count = 0;
+        for (Integer num: nums) {
+            if (lowerBound <= Integer.valueOf(num) && Integer.valueOf(num) <= upperBound) {
+                count++;
+                continue;
+            } 
+            System.out.println("Numbers: " + count);
+        }
+        
+        System.out.println("Numbers: " + count);
+
+    }
+
+}
