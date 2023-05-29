@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        ArrayList<Book> books = new ArrayList<>();
+        
+        while (true) {
+            System.out.println("Title: ");
+            String title = scanner.nextLine();
+            
+            if (title.equals("")) {
+                break;
+            } else {
+                System.out.println("Pages: ");
+                Integer pages = Integer.valueOf(scanner.nextLine());
+                System.out.println("Publication year: ");
+                Integer year = Integer.valueOf(scanner.nextLine());
+                books.add(new Book(title, pages, year));
+            }
+        }
+        
+        System.out.println("What information will be printed? ");
+        String input = scanner.nextLine();
+        
+        if (input.equals("everything")) {
+            for (Book book: books) {
+                System.out.println(book.toString());
+            }
+        } else if (input.equals("name")) {
+            for (Book book: books) {
+                System.out.println(book.getTitle());
+            }
+        } else {
+            // Do nothing
+        }
+    }
+}
+
+public class Book {
+    
+    private String title;
+    private int pages;
+    private int publicationYear;
+    
+    public Book(String initialTitle, int initialPages, int initialPublicationYear) {
+        this.title = initialTitle;
+        this.pages = initialPages;
+        this.publicationYear = initialPublicationYear;
+    }
+    
+    public String getTitle() {
+        return this.title;
+    }
+    
+    public int getPages() {
+        return this.pages;
+    }
+    
+    public int getPublicationYear() {
+        return this.publicationYear;
+    }
+    
+    public String toString() {
+        return this.title + ", " + this.pages + " pages, " + this.publicationYear;
+    }
+    
+}
