@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class MainProgram {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Enter a starting value: ");
+        int startValue = Integer.valueOf(scanner.nextLine());
+        
+        System.out.println("Starting: ");
+        
+        Counter fromZero = new Counter();
+        Counter custom = new Counter(startValue);
+        
+        // Test starting values 
+        System.out.println(fromZero.value());
+        System.out.println(custom.value());
+        
+        System.out.println("Increase by 1:  ");
+        
+        fromZero.increase();
+        custom.increase();
+        
+        // Test increase of values 
+        System.out.println(fromZero.value());
+        System.out.println(custom.value());
+        
+        System.out.println("Decrease by 1: ");
+        
+        fromZero.decrease();
+        custom.decrease();
+        
+        // Test decrease of values 
+        System.out.println(fromZero.value());
+        System.out.println(custom.value());
+        
+        System.out.println("Increase by 5: ");
+        
+        fromZero.increase(5);
+        custom.increase(5);
+        
+        // Test increase of values 
+        System.out.println(fromZero.value());
+        System.out.println(custom.value());
+        
+        System.out.println("Decrease by 15: ");
+        
+        fromZero.decrease(15);
+        custom.decrease(15);
+        
+        // Test decrease of values 
+        System.out.println(fromZero.value());
+        System.out.println(custom.value());
+        
+    }
+}
+
+public class Counter {
+    
+    private int value;
+    
+    public Counter(int startValue) {
+        this.value = startValue;
+    }
+    
+    public Counter() {
+        this.value = 0;
+    }
+    
+    public int value() {
+        return value;
+    }
+    
+    public void increase() {
+        this.value += 1;
+    }
+    
+    public void decrease() {
+        this.value -= 1;
+    }
+    
+    public void increase(int increaseBy) {
+        if (increaseBy >= 0) {
+           this.value += increaseBy; 
+        }
+    }
+    
+    public void decrease(int decreaseBy) {
+        if (decreaseBy >= 0) {
+           this.value -= decreaseBy; 
+        }
+    }
+    
+}
