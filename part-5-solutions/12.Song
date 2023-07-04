@@ -1,0 +1,56 @@
+public class Main {
+
+    public static void main(String[] args) {
+        // you can write code here for testing your program
+
+        Song jackSparrow = new Song("The Lonely Island", "Jack Sparrow", 196);
+        Song anotherSparrow = new Song("The Lonely Island", "Jack Sparrow", 196);
+
+        if (jackSparrow.equals(anotherSparrow)) {
+            System.out.println("Songs are equal");
+        }
+
+        if (jackSparrow.equals("Another object")) {
+            System.out.println("Strange things are afoot.");
+        }
+    }
+}
+
+public class Song {
+
+    private String artist;
+    private String name;
+    private int durationInSeconds;
+
+    public Song(String artist, String name, int durationInSeconds) {
+        this.artist = artist;
+        this.name = name;
+        this.durationInSeconds = durationInSeconds;
+    }
+    
+    public boolean equals(Song compared) {
+        if (this == compared) {
+            return true;
+        } 
+        
+        if (!(compared instanceof Song)) {
+            return false;
+        }
+        
+        Song comparedSong = (Song) compared;
+        
+        if (this.artist == comparedSong.artist &&
+            this.name == comparedSong.name &&
+            this.durationInSeconds == comparedSong.durationInSeconds) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.artist + ": " + this.name + " (" + this.durationInSeconds + " s)";
+    }
+
+}
