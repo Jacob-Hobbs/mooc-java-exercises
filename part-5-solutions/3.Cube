@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Enter the size of cube: ");
+        int size = Integer.valueOf(scanner.nextLine()); 
+        
+        Cube customCube = new Cube(size);
+        
+        System.out.println(customCube);
+           
+    }
+}
+
+public class Cube {
+    
+    private int edgeLength;
+    
+    public Cube(int edgeLength) {
+        this.edgeLength = edgeLength;
+    }
+    
+    public int volume() {
+        return edgeLength * edgeLength * edgeLength;
+    }
+    
+    public String toString() {
+        return "The length of the edge is " + edgeLength + " and the volume " + volume();
+    }
+}
