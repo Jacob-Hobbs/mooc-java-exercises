@@ -1,0 +1,120 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        HealthStation childrensHospital = new HealthStation();
+
+        Person ethan = new Person("Ethan", 1, 110, 7);
+        Person peter = new Person("Peter", 33, 176, 85);
+
+        System.out.println(ethan.getName() + " weight: " + childrensHospital.weigh(ethan) + " kilos");
+        System.out.println(peter.getName() + " weight: " + childrensHospital.weigh(peter) + " kilos");
+        
+        childrensHospital.feed(ethan);
+        childrensHospital.feed(ethan);
+        childrensHospital.feed(ethan);
+
+        System.out.println("");
+
+        System.out.println(ethan.getName() + " weight: " + childrensHospital.weigh(ethan) + " kilos");
+        System.out.println(peter.getName() + " weight: " + childrensHospital.weigh(peter) + " kilos");
+        
+        System.out.println("weighings performed: " + childrensHospital.weighings());
+
+        childrensHospital.weigh(ethan);
+        childrensHospital.weigh(peter);
+
+        System.out.println("weighings performed: " + childrensHospital.weighings());
+
+        childrensHospital.weigh(ethan);
+        childrensHospital.weigh(ethan);
+        childrensHospital.weigh(ethan);
+        childrensHospital.weigh(ethan);
+
+        System.out.println("weighings performed: " + childrensHospital.weighings());
+    }
+}
+
+public class Person {
+
+    private String name;
+    private int age;
+    private int height;
+    private int weight;
+
+    public Person(String name, int age, int height, int weight) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+    }
+
+    public void printPerson() {
+        System.out.println("My name is " + this.name + " and I am " + this.age + " years old");
+    }
+
+    public void growOlder() {
+        this.age++;
+    }
+
+    public boolean isOfLegalAge() {
+        if (this.age > 17) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWeight() {
+        return this.weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public double bmi() {
+        double heightInMeters = this.height / 100.0;
+
+        return this.weight / (heightInMeters * heightInMeters);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return "My name is " + this.name + " and I am " + this.age + " years old. My BMI is " + this.bmi();
+    }
+}
+
+public class HealthStation {
+    
+    private int count;
+
+
+    public int weigh(Person person) {
+        // return the weight of the person passed as the parameter
+        count++;
+        return person.getWeight();
+    }
+    
+    public void feed(Person person) {
+        
+        person.setWeight(person.getWeight() + 1);  
+    }
+    
+    public int weighings() {
+        return count;
+    }
+
+}
