@@ -1,0 +1,133 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        PaymentTerminal unicafeExactum = new PaymentTerminal();
+        System.out.println(unicafeExactum);
+
+        PaymentCard annesCard = new PaymentCard(2);
+
+        System.out.println("amount of money on the card is " + annesCard.balance() + " euros");
+
+        boolean wasSuccessful = unicafeExactum.eatHeartily(annesCard);
+        System.out.println("there was enough money: " + wasSuccessful);
+
+        unicafeExactum.addMoneyToCard(annesCard, 100);
+
+        wasSuccessful = unicafeExactum.eatHeartily(annesCard);
+        System.out.println("there was enough money: " + wasSuccessful);
+
+        System.out.println("amount of money on the card is " + annesCard.balance() + " euros");
+
+        System.out.println(unicafeExactum);
+    }
+}
+
+public class PaymentCard {
+
+    private double balance;
+
+    public PaymentCard(double balance) {
+        this.balance = balance;
+    }
+
+    public double balance() {
+        return this.balance;
+    }
+
+    public void addMoney(double increase) {
+        this.balance += increase;
+    }
+
+    public boolean takeMoney(double amount) {
+        
+        if (balance >= amount) {
+            balance -= amount;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+}
+
+public class PaymentTerminal {
+
+
+    private double money;  // amount of cash
+    private int affordableMeals; // number of sold affordable meals
+    private int heartyMeals;  // number of sold hearty meals
+
+
+    public PaymentTerminal() {
+        this.money = 1000;
+    }
+
+    public double eatAffordably(double payment) {
+        
+        if (payment >= 2.50) {
+            money += 2.50;
+            affordableMeals++;
+            return payment - 2.50;
+        } else {
+            return payment;
+        }
+        // an affordable meal costs 2.50 euros
+        // increase the amount of cash by the price of an affordable mean and return the change
+        // if the payment parameter is not large enough, no meal is sold and the method should return the whole payment    
+    }
+
+    public double eatHeartily(double payment) {
+        
+        if (payment >= 4.30) {
+            money += 4.30;
+            heartyMeals++;
+            return payment - 4.30;
+        } else {
+            return payment;
+        }
+        // a hearty meal costs 4.30 euros
+        // increase the amount of cash by the price of a hearty mean and return the change
+        // if the payment parameter is not large enough, no meal is sold and the method should return the whole payment
+    }
+    
+    public boolean eatAffordably(PaymentCard card) {
+        
+        if (card.balance() >= 2.50) {
+            card.takeMoney(2.50);
+            affordableMeals++;
+            return true;
+        } else {
+            return false;
+        }
+        // an affordable meal costs 2.50 euros
+        // if the payment card has enough money, the balance of the card is decreased by the price, and the method returns true
+        // otherwise false is returned
+    }
+
+    public boolean eatHeartily(PaymentCard card) {
+        if (card.balance() >= 4.30) {
+            card.takeMoney(4.30);
+            heartyMeals++;
+            return true;
+        } else {
+            return false;
+        }
+        // a hearty meal costs 4.30 euros
+        // if the payment card has enough money, the balance of the card is decreased by the price, and the method returns true
+        // otherwise false is returned
+    }
+    
+    public void addMoneyToCard(PaymentCard card, double sum) {
+        
+        if (sum >= 0) {
+            card.addMoney(sum);
+            money += sum;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "money: " + money + ", number of sold affordable meals: " + affordableMeals + ", number of sold hearty meals: " + heartyMeals;
+    }
+}
