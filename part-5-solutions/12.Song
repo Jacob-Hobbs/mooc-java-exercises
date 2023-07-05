@@ -28,7 +28,7 @@ public class Song {
         this.durationInSeconds = durationInSeconds;
     }
     
-    public boolean equals(Song compared) {
+    public boolean equals(Object compared) {
         if (this == compared) {
             return true;
         } 
