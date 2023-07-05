@@ -1,0 +1,83 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        ArrayList<Archive> archiveList = new ArrayList<>();
+        
+        while (true) {
+            
+            System.out.println("Identifier? (empty will stop)");
+            String identifier = scanner.nextLine();
+            if (identifier.isEmpty()) {
+                break;
+            }
+            
+            System.out.println("Name? (empty will stop)");
+            String name = scanner.nextLine();
+            if (name.isEmpty()) {
+                break;
+            }
+            
+            Archive archive = new Archive(name, identifier);
+            
+            if (archiveList.contains(archive)) {
+                System.out.println("Already on list");
+            } else {
+                archiveList.add(archive);
+            }
+            
+        }
+        
+        System.out.println("==Items==");
+        System.out.println(archiveList);
+        
+        for(Archive archive: archiveList) {
+            System.out.println(archive);
+        }
+
+    }
+}
+
+public class Archive {
+    
+    private String identifier;
+    private String name;
+    
+    public Archive(String name, String identifier) {
+        this.identifier = identifier;
+        this.name = name;
+    }
+    
+    public String getIdentifier() {
+        return identifier;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public boolean equals(Object compared) {
+        
+        if (this == compared) {
+            return true;
+        }
+        
+        if (!(compared instanceof Archive)) {
+            return false;
+        }
+        
+        Archive comparedArchive = (Archive) compared;
+        
+        return this.name.equals(comparedArchive.name) && this.identifier.equals(comparedArchive.identifier);
+    }
+    
+    
+    public String toString() {
+        return this.identifier + ": " + this.name;
+    }
+    
+}
