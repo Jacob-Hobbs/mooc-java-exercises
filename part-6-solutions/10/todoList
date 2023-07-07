@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        TodoList list = new TodoList();
+        Scanner scanner = new Scanner(System.in);
+
+        UserInterface ui = new UserInterface(list, scanner);
+        ui.start();
+
+    }
+}
+
+import java.util.ArrayList;
+
+
+public class TodoList {
+    
+    private ArrayList<String> list;
+    
+    public TodoList() {
+        this.list = new ArrayList<>();
+    }
+    
+    public void add(String task) {
+        this.list.add(task);
+    }
+    
+    public void print() {
+        
+        for (String task: list) {
+            int element = this.list.indexOf(task);
+            int place = element + 1;
+            System.out.println(place + ": " + task);
+        }
+    }
+    
+    public void remove(int number) {
+        
+        this.list.remove(number - 1);
+    }
+    
+}
+
+import java.util.Scanner;
+
+
+public class UserInterface {
+    private TodoList todoList;
+    private Scanner scanner;
+    
+    public UserInterface(TodoList todoList, Scanner scanner) {
+        this.todoList = new TodoList();
+        this.scanner = new Scanner(System.in);
+    }
+    
+    public void start() {
+        while (true) {
+            System.out.println("Command: ");
+            String command = scanner.nextLine();
+            if (command.equals("stop")) {
+                break;
+            } else if (command.equals("add")) {
+                System.out.println("To add: ");
+                String toAdd = scanner.nextLine();
+                this.todoList.add(toAdd);
+            } else if (command.equals("list")) {
+                this.todoList.print();
+            } else if (command.equals("remove")) {
+                System.out.println("Which one is removed? ");
+                int num = Integer.valueOf(scanner.nextLine());
+                this.todoList.remove(num);
+            }
+        }
+    }
+    
+}
