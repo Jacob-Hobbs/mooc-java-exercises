@@ -1,0 +1,94 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+
+        JokeManager manager = new JokeManager();
+        Scanner scanner = new Scanner(System.in);
+
+        UserInterface ui = new UserInterface(manager, scanner);
+        ui.start();
+    }
+}
+
+import java.util.ArrayList;
+import java.util.Random;
+
+
+public class JokeManager {
+    
+    private ArrayList<String> jokeList;
+    
+    
+    
+    public JokeManager() {
+        this.jokeList = new ArrayList<>();
+    }
+    
+    public void addJoke(String joke) {
+        this.jokeList.add(joke);
+    }
+    
+    public String drawJoke() {
+        int size = this.jokeList.size() - 1;
+        String returnString = "";
+        if (this.jokeList.isEmpty()) {
+            return "Jokes are in short supply.";
+        } else {
+            Random random = new Random();
+            int randomNum = random.nextInt(this.jokeList.size());
+            String randomJoke = this.jokeList.get(randomNum);
+            returnString = randomJoke;
+        }
+        return returnString;
+    }
+    
+    public void printJokes() {
+        for (String joke: jokeList) {
+            System.out.println(joke);
+        }
+    }
+}
+
+import java.util.Scanner;
+
+
+public class UserInterface {
+    
+    private JokeManager jokeManager;
+    private Scanner scanner;
+    
+    public UserInterface(JokeManager jokeManager, Scanner scanner) {
+        this.jokeManager = new JokeManager();
+        this.scanner = scanner;
+        
+    }
+    
+    public void start() {
+        while (true) {
+            System.out.println("Commands: ");
+            System.out.println("1 - add a joke");
+            System.out.println("2 - draw a joke");
+            System.out.println("3 - list jokes");
+            System.out.println("X - stop");
+            String command = this.scanner.nextLine();
+        
+            if (command.equals("X")) {
+                break;
+            } else if (command.equals("1")) {
+                System.out.println("Write the joke to be added: ");
+                String jokeToAdd = this.scanner.nextLine();
+                this.jokeManager.addJoke(jokeToAdd);
+            } else if (command.equals("2")) {
+                System.out.println(this.jokeManager.drawJoke());
+            } else if (command.equals("3")) { 
+                this.jokeManager.printJokes();
+            } else {
+                System.out.println("Invalid command. Try again!");
+            }
+        }
+    }
+    
+}
+
