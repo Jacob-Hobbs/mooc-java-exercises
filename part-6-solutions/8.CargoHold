@@ -1,0 +1,190 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Item book = new Item("Lord of the rings", 2);
+        Item phone = new Item("Nokia 3210", 1);
+        Item brick = new Item("brick", 4);
+
+        Suitcase adasCase = new Suitcase(10);
+        adasCase.addItem(book);
+        adasCase.addItem(phone);
+
+        Suitcase pekkasCase = new Suitcase(10);
+        pekkasCase.addItem(brick);
+
+        Hold hold = new Hold(1000);
+        hold.addSuitcase(adasCase);
+        hold.addSuitcase(pekkasCase);
+
+        System.out.println("The suitcases in the hold contain the following items:");
+        hold.printItems();           
+        
+    }
+
+}
+
+public class Item {
+    
+    private String name;
+    private int weight;
+    
+    public Item(String name, int weight) {
+        this.name = name;
+        this.weight = weight; 
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public int getWeight() {
+        return this.weight;
+    }
+    
+    public String toString() {
+        return this.name + " (" + this.weight + " kg)";
+    }
+
+}
+
+import java.util.ArrayList;
+
+public class Suitcase {
+    
+    private ArrayList<Item> items;
+    private int maximumWeight;
+    
+    
+    public Suitcase(int maximumWeight) {
+        this.maximumWeight = maximumWeight;
+        this.items = new ArrayList<>();
+    }
+    
+    public void addItem(Item item) {
+        
+        int totalWeight = 0;
+        
+        for (Item element: items) {
+            
+            totalWeight += element.getWeight(); 
+              
+        }
+        
+        if (totalWeight + item.getWeight() <= this.maximumWeight) {
+            this.items.add(item);
+        }
+    }
+    
+    public String toString() {
+        int totalWeight = 0;
+        int totalItems = this.items.size();
+        for (Item element: items) {
+            totalWeight += element.getWeight();
+        }
+        
+        if (this.items.isEmpty()) {
+            return "no items (0 kg)";
+        } else if (totalItems == 1) {
+            return totalItems + " item (" + totalWeight + " kg)";
+        } else {
+            return totalItems + " items (" + totalWeight + " kg)";
+        }
+    }
+    
+    public void printItems() {
+     
+        for (Item element: items) {
+            System.out.println(element);;
+        }   
+    }
+    
+    public int totalWeight() {
+        int totalWeight = 0;
+        for (Item element: items) {
+            totalWeight+= element.getWeight();
+        }
+        
+        return totalWeight;
+    }
+    
+    public Item heaviestItem() {
+        if (this.items.isEmpty()) {
+            return null;
+        }
+        
+        Item returnItem = this.items.get(0);
+        
+        for (Item element: items) {
+            if (returnItem.getWeight() < element.getWeight()) {
+                returnItem = element;
+            }
+        }
+        return returnItem;
+        
+    }
+    
+    public String listItems() {
+        String listItems = "";
+        
+        for (Item element: items) {
+            listItems += element.toString() + "\n";
+        }
+        
+        return listItems;
+    }
+    
+}
+
+import java.util.ArrayList;
+
+
+public class Hold {
+    
+    private int maximumWeight;
+    private ArrayList<Suitcase> holdList;
+    
+    public Hold(int maximumWeight) {
+        this.maximumWeight = maximumWeight;
+        this.holdList = new ArrayList<>();
+    }
+    
+    public void addSuitcase(Suitcase suitcase) {
+        
+        int totalWeight = 0;
+        
+        for (Suitcase object: holdList) {
+            
+            totalWeight += object.totalWeight(); 
+              
+        }
+        
+        if (totalWeight + suitcase.totalWeight() <= this.maximumWeight) {
+            this.holdList.add(suitcase);
+        }
+        
+    }
+    
+    public String toString() {
+        
+        int totalWeight = 0;
+        int totalSuitcases = this.holdList.size();
+        for (Suitcase object: holdList) {
+            totalWeight += object.totalWeight();
+        }
+        
+        if (this.holdList.isEmpty()) {
+            return "no items (0 kg)";
+        } else {
+            return totalSuitcases + " suitcases (" + totalWeight + " kg)";
+        }
+        
+    }
+    
+    public void printItems() {
+        for (Suitcase object: holdList) {
+            System.out.println(object.listItems());
+        }   
+    }
+    
+}
