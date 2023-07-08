@@ -1,0 +1,118 @@
+public class MainProgram {
+
+    // update here your exercise progress
+    public static int partsCompleted() {
+        return 2;
+    }
+}
+
+import java.util.ArrayList;
+
+
+public class ExerciseManagement {
+    
+    private ArrayList<Exercise> exerciseList;
+    
+    
+    public ExerciseManagement() {
+        this.exerciseList = new ArrayList<>();
+    }
+    
+    public ArrayList<String> exerciseList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (Exercise exercise: exerciseList) {
+            list.add(exercise.getName());
+        }
+        return list;
+    }
+    
+    public void add(String exercise) {
+        this.exerciseList.add(new Exercise(exercise));
+    }
+    
+    public void markAsCompleted(String exercise) {
+        for (Exercise ex: exerciseList) {
+            if (ex.getName().equals(exercise)) {
+                ex.setCompleted(true);
+            }
+        }
+    }
+    
+    public boolean isCompleted(String exercise) {
+        for (Exercise ex: exerciseList) {
+            if (ex.getName().equals(exercise)) {
+                return ex.isCompleted();
+            }
+        }
+        return false;
+    }
+
+}
+
+public class Exercise {
+    
+    private String name;
+    private boolean completed;
+    
+    public Exercise(String name) {
+        this.name = name;
+        this.completed = false;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+    
+    public boolean isCompleted() {
+        return completed;
+    }
+    
+}
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+
+
+
+public class ExerciseManagementTest {
+    
+    private ExerciseManagement management;
+    
+    // Runs this methods *before* each test method
+    @Before
+    public void initialize() {
+        management = new ExerciseManagement();
+    }
+    
+    @Test
+    public void exerciseListEmptyAtBeginning() {
+        assertEquals(0, management.exerciseList().size());
+    }
+    
+    @Test
+    public void addingExerciseGrowsListByOne() {
+        management.add("Write a test");
+        assertEquals(1, management.exerciseList().size());
+    }
+    
+    @Test
+    public void addedExerciseIsInList() {
+        management.add("Write a test");
+        assertTrue(management.exerciseList().contains("Write a test"));
+    }
+    
+    @Test
+    public void exerciseCanBeMarkedAsCompleted() {
+        management.add("New exercise");
+        management.markAsCompleted("New exercise");
+        assertTrue(management.isCompleted("New exercise"));
+    }
+
+}
