@@ -1,0 +1,183 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        GradeRegister register = new GradeRegister();
+        
+        UserInterface userInterface = new UserInterface(scanner, register);
+        userInterface.start();
+    }
+}
+
+import java.util.Scanner;
+
+public class UserInterface {
+    
+    private Scanner scanner;
+    private GradeRegister gradeRegister;
+    
+    public UserInterface(Scanner scanner, GradeRegister gradeRegister) {
+        this.scanner = scanner;
+        this.gradeRegister = new GradeRegister();
+    }
+    
+    public void start() {
+        
+        System.out.println("Enter points totals, -1 stops: ");
+        
+        
+        while(true) {
+    
+            int num = Integer.valueOf(this.scanner.nextLine());
+            if (num == -1) {
+                break;
+            } else {
+                if (num >= 0 && num <= 100) {
+                    this.gradeRegister.add(num);
+                }
+            }
+        }
+        
+        System.out.println("Point average (all): " + this.gradeRegister.average());
+        
+        if (this.gradeRegister.passingAverage() == 0) {
+            System.out.println("Point average (passing): -");
+        } else {
+            System.out.println("Point average (passing): " + this.gradeRegister.passingAverage());
+        }
+        
+        System.out.println("Pass percentage: " + this.gradeRegister.passPercentage());
+        System.out.println("Grade distribution: ");
+        this.gradeRegister.gradeDistribution();
+    }
+    
+}
+
+import java.util.ArrayList;
+
+public class GradeRegister {
+    
+    private int points;
+    private int count;
+    private int passingPoints;
+    private int passingCount;
+    private int grade0;
+    private int grade1;
+    private int grade2;
+    private int grade3;
+    private int grade4;
+    private int grade5;
+    
+    public GradeRegister() {
+        this.points = 0;
+        this.count = 0;
+        this.passingPoints = 0;
+        this.passingCount = 0;
+        this.grade0 = 0;
+        this.grade1 = 0;
+        this.grade2 = 0;
+        this.grade3 = 0;
+        this.grade4 = 0;
+        this.grade5 = 0;
+    }
+    
+    public void add(int amount) {
+        if (amount >= 50) {
+            this.passingPoints += amount;
+            this.passingCount++;
+            this.points += amount;
+            this.count++;
+            
+            if (amount >= 50 && amount < 60) {
+                this.grade1++;
+            } else if (amount >= 60 && amount < 70) {
+                this.grade2++;
+            } else if (amount >= 70 && amount < 80) {
+                this.grade3++;
+            } else if (amount >= 80 && amount < 90) {
+                this.grade4++;
+            } else if (amount >= 90 && amount <= 100) {
+                this.grade5++;
+            }    
+        } else {
+            this.points += amount;
+            this.count++;
+            this.grade0++;
+        }
+    }
+    
+    public double average() {
+        double average = (double) this.points / this.count;
+        return average;
+    }
+    
+    public double passingAverage() {
+        
+        if (this.passingPoints == 0 && this.passingCount == 0) {
+            return 0;
+        }
+        double average = (double) this.passingPoints / this.passingCount;
+        
+        return average;
+    }
+    
+    public double passPercentage() {
+        if (this.passingCount == 0) {
+            return 0;
+        }
+        return 100 * ((double) this.passingCount/this.count);
+    }
+    
+    public void printStars(int num) {
+        
+        
+        if (num > 0) {
+            for (int i = 0; i < num; i++) {
+                System.out.print("*");;
+            }   
+            
+        }
+          
+        
+    }
+    
+    public void gradeDistribution() {
+        
+        ArrayList<Integer> grades = new ArrayList<>();
+        grades.add(this.grade0);
+        grades.add(this.grade1);
+        grades.add(this.grade2);
+        grades.add(this.grade3);
+        grades.add(this.grade4);
+        grades.add(this.grade5);
+        
+        ArrayList<Integer> stars = new ArrayList<>();
+        
+        
+        while (true) {
+            for (int i = 5; i >= 0; i--) {
+                
+                System.out.print(i + ": ");
+                printStars(grades.get(i));
+                System.out.print("\n");
+            }   
+            break;
+ 
+        }
+        
+        
+    }
+    
+    public void printGrades() {
+        System.out.println(this.grade0);
+        System.out.println(this.grade1);
+        System.out.println(this.grade2);
+        System.out.println(this.grade3);
+        System.out.println(this.grade4);
+        System.out.println(this.grade5);
+        
+    }
+    
+}
