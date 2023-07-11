@@ -1,0 +1,177 @@
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Recipe {
+    
+    private String name;
+    private int cookTime;
+    private String ingredient;
+    private ArrayList<String> ingredients;
+    
+    private ArrayList<Recipe> recipes;
+    
+    public Recipe(String name, int cookTime, ArrayList<String> ingredients) {
+        this.name = name;
+        this.cookTime = cookTime;
+        this.ingredients = new ArrayList<>();
+        this.recipes = new ArrayList<>();
+        this.ingredient = ingredient;
+    }
+    
+    @Override public String toString() {
+        return this.name + this.cookTime + this.ingredients;
+    }
+    
+    
+    
+    public String getRecipeName(String recipe) {
+        if (this.recipes.contains(recipe)) {
+            return recipe;
+        }   
+        return "Recipe not found!";
+    }
+    
+    public void readRecipeDocument(String file) {
+        
+        
+        ArrayList<String> ingredientList = new ArrayList<>();
+        
+        while (true) {
+            try (Scanner scanner = new Scanner(Paths.get(file))) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    ingredientList.add(line);    
+                }
+                
+                System.out.println("(1) Ingredient List: " + ingredientList);
+                
+                
+                
+                ArrayList<String> placeHolderList = new ArrayList<>();
+                String recipeName = "Error";
+                int time = 0;
+                
+                int size = ingredientList.size();
+                
+                for (int i = 0; i < size; i++) {
+                    
+                    System.out.println("ELEMENT 0 = " + ingredientList.get(0));
+                    System.out.println("ELEMENT 0 INDEX = " + ingredientList.indexOf(ingredientList.get(i)));
+                       
+                    if (ingredientList.indexOf(ingredientList.get(i)) == 0) {
+                        recipeName = ingredientList.get(i);
+                        System.out.println("(2) ELIF NAME: " + recipeName);
+                        
+                    } else if (ingredientList.indexOf(ingredientList.get(i)) == 1) {
+                        time = Integer.valueOf(ingredientList.get(i));
+                        System.out.println("(3) ELIF TIME: " + ingredientList.get(i));
+                        
+                    } else if (!(ingredientList.get(i).isBlank())) {
+                        placeHolderList.add(ingredientList.get(i));
+                        System.out.println("(4) Ingredient for list: " + ingredientList.get(i));
+                        
+                    } else {
+                        System.out.println("BLANK REACHED");
+                        Recipe recipe = new Recipe(recipeName, time, placeHolderList);
+                        this.recipes.add(recipe);
+                        
+                        System.out.println("(5) Before deleting recipeName (0): " + ingredientList.get(0));
+                        ingredientList.remove(recipeName);
+                        size--;
+
+                        System.out.println("(6) Before deleting time (0): " + ingredientList.get(0));
+                        ingredientList.remove(String.valueOf(time));
+                        size--;
+
+                        System.out.println("(7) Before deleting list (0): " + ingredientList.get(0));
+                        for (String individualIngredient: placeHolderList) {
+                            ingredientList.remove(individualIngredient);
+                            size--;
+                        }
+                        System.out.println("(8) Before deleting blank (0): " + ingredientList.get(0));
+                        
+                        
+                        ingredientList.remove(0);
+                        
+                        size--;
+                        System.out.println("(9) After deleting blank (0): " + ingredientList.get(0));
+                        
+                        placeHolderList.clear();
+                        
+                        System.out.println(ingredientList);
+                        System.out.println("(10) Element 0: " + ingredientList.get(0));
+                        System.out.println("(11) Element 1: " + ingredientList.get(1));
+                        System.out.println("(12) Element 2: " + ingredientList.get(2));
+                        System.out.println("(13) Element 3: " + ingredientList.get(3));
+                        System.out.println("(14) Element 4: " + ingredientList.get(4));
+                        System.out.println("(15) Element 5: " + ingredientList.get(5));
+                        System.out.println("(16) Element 6: " + ingredientList.get(6));
+                        
+                        i = 0;
+                    }
+   
+                    
+                }
+                
+                
+
+                
+                //for (String listItem: ingredientList) {
+                    
+                    
+                    //if (listItem.isBlank()) {
+                        //Recipe recipe = new Recipe(recipeName, time, placeHolderList);
+                        //this.recipes.add(recipe);
+                        
+
+                        
+
+                        //ingredientList.remove(recipeName);
+
+                        
+                        //ingredientList.remove(String.valueOf(time));
+
+                        
+                        //for (String individualIngredient: placeHolderList) {
+                            //ingredientList.remove(individualIngredient);
+                        //}
+                        //ingredientList.remove(0);
+                        
+                        //System.out.println(ingredientList);
+                        //System.out.println(ingredientList.get(0));
+                        //System.out.println(ingredientList.get(1));
+                        //System.out.println(ingredientList.get(2));
+                        
+                        
+                    //} else if (ingredientList.indexOf(listItem) == 0) {
+                        //recipeName = listItem;
+                        
+                    //} else if (ingredientList.indexOf(listItem) == 1) {
+                        //time = Integer.valueOf(listItem);
+                        
+                    //} else {
+                        //placeHolderList.add(listItem);
+                        
+                    //}
+                //}
+                    
+                
+   
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+            break;
+        }
+    }
+    
+    public void printRecipes() {
+        for (Recipe recipe: this.recipes) {
+            System.out.println(recipe.name + ", cooking time: " + recipe.cookTime);
+        }
+    }
+    
+    
+    
+}
