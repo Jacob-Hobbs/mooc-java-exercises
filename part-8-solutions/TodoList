@@ -1,0 +1,89 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        TodoList todoList = new TodoList();
+        
+        UserInterface userInterface = new UserInterface(scanner, todoList);
+        userInterface.start();
+        
+        
+        
+
+    }
+}
+
+import java.util.ArrayList;
+
+public class TodoList {
+    
+    private ArrayList<String> list;
+    
+    
+    public TodoList() {
+        this.list = new ArrayList<>();
+    }
+    
+    public void add(String task) {
+        list.add(task);
+    }
+    
+    public void print() {
+        
+        int num = 1;
+        for (String task: list) {
+            System.out.println(num + ": " + task);
+            num++;
+        }
+        
+    }
+    
+    public void remove(int number) {
+        list.remove(number - 1);
+        
+    }
+    
+}
+
+import java.util.Scanner;
+
+
+public class UserInterface {
+    
+    private Scanner scanner;
+    private TodoList todoList; 
+    
+    public UserInterface(Scanner scanner, TodoList todoList) {
+        this.scanner = scanner;
+        this.todoList = new TodoList();
+    }
+    
+    public void start() {
+        
+        while (true) {
+            System.out.println("Command: ");
+            String command = this.scanner.nextLine();
+            
+            if (command.equals("stop")) {
+                break;
+            } else if (command.equals("add")) {
+                System.out.println("To add: ");
+                String newTask = this.scanner.nextLine();
+                this.todoList.add(newTask);
+            } else if (command.equals("list")) {
+                this.todoList.print();
+            } else if (command.equals("remove")) {
+                System.out.println("Which one is removed? ");
+                int num = Integer.valueOf(scanner.nextLine());
+                this.todoList.remove(num);
+            } else {
+                System.out.println("Unknown command. Please try again...");
+            }
+        
+        }
+    }
+    
+}
