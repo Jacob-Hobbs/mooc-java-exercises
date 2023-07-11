@@ -1,1 +1,131 @@
+import java.util.Scanner;
 
+public class LiquidContainers2 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(scanner);
+        userInterface.start();
+        
+    }
+
+}
+
+public class Container {
+    
+    private int volume;
+    
+    public Container() {
+        this.volume = 0;
+        
+    }
+    
+    public void setVolume(int amount) {
+        this.volume = amount;
+    }
+    
+    public int contains() {
+        return this.volume;
+    }
+    
+    public void add(int amount) {
+        
+        
+        volume += amount;
+        if (volume >= 100) {
+            volume = 100;
+        }
+  
+    }
+    
+    public void remove(int amount) {
+        if (amount > 0) {
+            volume -= amount;
+            
+        }
+    }
+    
+    public String toString() {
+        return this.volume + "/100"; 
+    }
+}
+
+import java.util.Scanner;
+
+
+public class UserInterface {
+    
+    private Scanner scanner;
+    private Container containerOne;
+    private Container containerTwo;
+    
+    public UserInterface(Scanner scanner) {
+        this.scanner = scanner;
+        this.containerOne = new Container();
+        this.containerTwo = new Container(); 
+    }
+    
+    public void start() {
+        while(true) {
+            System.out.println("First: " + containerOne);
+            System.out.println("Second: " + containerTwo);
+
+            String input = this.scanner.nextLine();
+            
+            if (input.equals("quit")) {
+                break;
+            }
+            String[] parts = input.split(" ");
+            String command = parts[0];
+            int amount = Integer.valueOf(parts[1]);
+            
+            if (command.equals("add")) {
+                if (amount >= 0) {
+                    this.containerOne.add(amount);
+                }
+                
+                if (this.containerOne.contains() >= 100) {
+                    this.containerOne.equals(100);
+                    
+                }    
+                    
+            } else if (command.equals("move")) {
+                if (amount >= 0) {
+                    
+                    if (this.containerOne.contains() <= 0) {
+                        this.containerTwo = this.containerTwo;
+                    } else {
+                        this.containerOne.remove(amount);
+                        this.containerTwo.add(amount);
+                        
+                        
+                        if (this.containerOne.contains() < 0) {
+                            
+                            this.containerTwo.add(this.containerOne.contains());
+                            this.containerOne.setVolume(0);
+                            
+                        }
+                
+                        if (this.containerTwo.contains() >= 100) {
+                            this.containerTwo.setVolume(100);
+                        }  
+                    }
+                }
+                
+            } else if (command.equals("remove")) {
+                if (amount >= 0) {
+                    this.containerTwo.remove(amount);
+                    
+                    
+                    if (this.containerTwo.contains() <= 0) {
+                        this.containerTwo.setVolume(0);
+                    }
+                }
+   
+            } else {
+                System.out.println("Invalid command. Please Try again...");
+            }
+        }
+    }
+    
+}
