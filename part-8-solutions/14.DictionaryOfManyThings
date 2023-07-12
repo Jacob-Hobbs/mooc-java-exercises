@@ -1,0 +1,55 @@
+public class Program {
+
+    public static void main(String[] args) {
+                
+        DictionaryOfManyTranslations dictionary = new DictionaryOfManyTranslations();
+        dictionary.add("bat", "baseball bat");
+        dictionary.add("bat", "flying mammal");
+
+        dictionary.add("bow", "to lower oneself");
+        dictionary.add("bow", "instrument used to shoot arrows");
+
+        System.out.println(dictionary.translate("bat"));
+        dictionary.remove("bow");
+        System.out.println(dictionary.translate("bow"));
+    }
+}
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class DictionaryOfManyTranslations {
+    
+    private HashMap<String, ArrayList<String>> hashMap;
+    
+    public DictionaryOfManyTranslations() {
+        this.hashMap = new HashMap<>();
+        
+    }
+    
+    public void add(String word, String translation) {
+       
+        this.hashMap.putIfAbsent(word, new ArrayList<String>());
+        this.hashMap.get(word).add(translation);
+        
+   
+    }
+    
+    public ArrayList<String> translate(String word) {
+        for (String key: this.hashMap.keySet()) {
+            if (key.equals(word)) {
+                return this.hashMap.get(key);
+            }
+        }
+        return new ArrayList<>();
+        
+    }
+    
+    public void remove(String word) {
+        this.hashMap.putIfAbsent(word, new ArrayList<String>());
+        this.hashMap.remove(word);
+        
+    }
+      
+}
