@@ -1,0 +1,35 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        IOU mattsIOU = new IOU();
+        mattsIOU.setSum("Arthur", 51.5);
+        mattsIOU.setSum("Michael", 30);
+
+        System.out.println(mattsIOU.howMuchDoIOweTo("Arthur"));
+        System.out.println(mattsIOU.howMuchDoIOweTo("Michael"));
+        
+    }
+}
+
+import java.util.HashMap;
+
+
+public class IOU {
+    
+    private HashMap<String, Double> iouHashMap;
+    
+    public IOU() {
+        this.iouHashMap = new HashMap<>();
+        
+    }
+    
+    public void setSum(String toWhom, double amount) {
+        this.iouHashMap.put(toWhom, amount);
+    }
+    
+    public double howMuchDoIOweTo(String toWhom) {
+        return this.iouHashMap.getOrDefault(toWhom, Double.valueOf(0));
+    }
+    
+}
