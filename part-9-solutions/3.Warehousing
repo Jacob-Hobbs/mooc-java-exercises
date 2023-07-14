@@ -1,0 +1,209 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        // the usual:
+        ProductWarehouseWithHistory juice = new ProductWarehouseWithHistory("Juice", 1000.0, 1000.0);
+        juice.takeFromWarehouse(11.3);
+        System.out.println(juice.getName()); // Juice
+        juice.addToWarehouse(1.0);
+        System.out.println(juice);           // Juice: balance = 989.7, space left 10.3
+
+        // etc
+
+        // however, history() still doesn't work properly:
+        System.out.println(juice.history()); // [1000.0]
+        // so we only get the initial state of the history set by the constructor...
+    }
+
+}
+
+public class Warehouse {
+
+    private double capacity;
+    private double balance;
+
+    public Warehouse(double capacity) {
+        if (capacity > 0.0) {
+            this.capacity = capacity;
+        } else {
+            this.capacity = 0.0;
+        }
+
+        this.balance = 0.0;
+    }
+
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public double getCapacity() {
+        return this.capacity;
+    }
+
+    public double howMuchSpaceLeft() {
+        return this.capacity - this.balance;
+    }
+
+    public void addToWarehouse(double amount) {
+        if (amount < 0) {
+            return;
+        }
+        if (amount <= howMuchSpaceLeft()) {
+            this.balance = this.balance + amount;
+        } else {
+            this.balance = this.capacity;
+        }
+    }
+
+    public double takeFromWarehouse(double amount) {
+        if (amount < 0) {
+            return 0.0;
+        }
+        if (amount > this.balance) {
+            double allThatWeCan = this.balance;
+            this.balance = 0.0;
+            return allThatWeCan;
+        }
+
+        this.balance = this.balance - amount;
+        return amount;
+    }
+
+    public String toString() {
+        return "balance = " + this.balance + ", space left " + howMuchSpaceLeft();
+    }
+}
+
+public class ProductWarehouse extends Warehouse {
+    
+    private String productName;
+    
+    public ProductWarehouse(String productName, double capacity) {
+        super(capacity);
+        this.productName = productName;
+    }
+    
+    public String getName() {
+        return this.productName;
+    }
+    
+    public void setName(String newName) {
+        this.productName = newName;
+    }
+    
+    @Override
+    public String toString() {
+        return this.productName + ": " + super.toString();
+    }
+    
+}
+
+import java.util.ArrayList;
+
+
+public class ChangeHistory {
+    
+    private ArrayList<Double> list;
+    
+    public ChangeHistory() {
+        this.list = new ArrayList<>();
+    }
+    
+    public void add(double status) {
+        this.list.add(status);
+    }
+    
+    public void clear() {
+        this.list.clear();
+    }
+    
+    public String toString() { 
+        return String.valueOf(this.list);
+    }
+    
+    public double maxValue() {
+        Double largest = -1.0;
+        if (this.list.isEmpty()) {
+            return 0.00;
+        } else {
+            for (Double value: this.list) {
+                if (value > largest) {
+                    largest = value;
+                }
+            }
+        }
+        return largest;
+    }
+    
+    public double minValue() {
+        Double smallest = 10000000.0;
+        if (this.list.isEmpty()) {
+            return 0.00;
+        } else {
+            for (Double value: this.list) {
+                if (value < smallest) {
+                    smallest = value;
+                }
+            }
+        }
+        return smallest;
+    }
+    
+    public double average() {
+        int count = 0;
+        double sum = 0;
+        double avg = 0;
+        
+        if (this.list.isEmpty()) {
+            return 0.00;
+        } else {
+            for (Double value: this.list) {
+                sum += value;
+                count++;
+            }
+            
+            avg = sum / count;
+        }
+        return avg;
+    }
+    
+}
+
+public class ProductWarehouseWithHistory  extends ProductWarehouse {
+    
+    private ChangeHistory changeHistory;
+    
+    public ProductWarehouseWithHistory(String productName, double capacity, double initialBalance) {
+        super(productName, capacity);
+        this.changeHistory = new ChangeHistory();
+        addToWarehouse(initialBalance);
+    }
+    
+    public String history() {
+        return this.changeHistory.toString();
+    }
+    
+    @Override
+    public void addToWarehouse(double amount) {
+        super.addToWarehouse(amount);
+        changeHistory.add(getBalance());
+    }
+    
+    @Override
+    public double takeFromWarehouse(double amount) {
+        double received = super.takeFromWarehouse(amount);
+        changeHistory.add(getBalance());
+        return received;
+    }
+    
+    public void printAnalysis() {
+        System.out.println("Product: " + getName());
+        System.out.println("History: " + history());
+        System.out.println("Largest amount of product: " + changeHistory.maxValue());
+        System.out.println("Smallest amount of product: " + changeHistory.minValue());
+        System.out.println("Average: " + changeHistory.average());
+    }
+    
+    
+}
