@@ -1,0 +1,166 @@
+public class Main {
+
+    public static void main(String[] args) {
+        BoxWithMaxWeight coffeeBox = new BoxWithMaxWeight(10);
+        coffeeBox.add(new Item("Saludo", 5));
+        coffeeBox.add(new Item("Pirkka", 5));
+        coffeeBox.add(new Item("Kopi Luwak", 5));
+
+        System.out.println(coffeeBox.isInBox(new Item("Saludo")));
+        System.out.println(coffeeBox.isInBox(new Item("Pirkka")));
+        System.out.println(coffeeBox.isInBox(new Item("Kopi Luwak")));
+    }
+}
+
+import java.util.ArrayList;
+
+public abstract class Box {
+
+    public abstract void add(Item item);
+
+    public void add(ArrayList<Item> items) {
+        for (Item item : items) {
+            Box.this.add(item);
+        }
+    }
+
+    public abstract boolean isInBox(Item item);
+}
+
+import java.util.Objects;
+
+
+public class Item {
+
+    private String name;
+    private int weight;
+
+    public Item(String name, int weight) {
+        this.name = name;
+        this.weight = weight;
+    }
+
+    public Item(String name) {
+        this(name, 0);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+}
+
+import java.util.ArrayList;
+
+
+
+public class BoxWithMaxWeight extends Box{
+    
+    private int capacity;
+    private ArrayList<Item> box;
+
+
+    
+    public BoxWithMaxWeight(int capacity) {
+        this.capacity = capacity;
+        this.box = new ArrayList<>();
+    }
+    
+    @Override
+    public void add(Item item) {
+        
+        int boxWeight = 0;
+        for (Item items: this.box) {
+            boxWeight+= items.getWeight();
+        }
+        if (this.capacity - (item.getWeight() + boxWeight) >= 0) {
+            this.box.add(item);
+        }
+    }
+    
+    @Override
+    public boolean isInBox(Item item) {
+        if (this.box.contains(item)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+import java.util.ArrayList;
+
+
+public class OneItemBox extends Box{
+    
+    private ArrayList<Item> box;
+    
+    public OneItemBox() {
+        this.box = new ArrayList<>();
+    }
+    
+    @Override
+    public void add(Item item) {
+        
+        if (this.box.isEmpty()) {
+            this.box.add(item);
+        }
+    }
+    
+    @Override
+    public boolean isInBox(Item item) {
+        if (this.box.contains(item)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+import java.util.ArrayList;
+
+public class MisplacingBox extends Box {
+    
+    private ArrayList<Item> box;
+    
+    public MisplacingBox() {
+        this.box = new ArrayList<>();
+    }
+    
+    @Override
+    public void add(Item item) { 
+        this.box.add(item);
+    }
+    
+    @Override
+    public boolean isInBox(Item item) {
+        return false;
+    }
+}
