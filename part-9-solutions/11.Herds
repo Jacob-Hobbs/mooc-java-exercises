@@ -1,0 +1,71 @@
+public class MainProgram {
+
+    public static void main(String[] args) {
+        
+        Herd herd = new Herd();
+        herd.addToHerd(new Organism(57, 66));
+        herd.addToHerd(new Organism(73, 56));
+        herd.addToHerd(new Organism(46, 52));
+        herd.addToHerd(new Organism(19, 107));
+        System.out.println(herd);
+    }
+}
+
+public interface Movable {
+
+    void move(int dx, int dy);
+}
+
+public class Organism implements Movable {
+    
+    private int x;
+    private int y;
+    
+    public Organism(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+     
+    public void move(int dx, int dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+    
+    public String toString() {
+        return "x: " + this.x + "; y: " + this.y;
+    }
+     
+}
+
+import java.util.ArrayList;
+
+
+public class Herd implements Movable {
+    
+    private ArrayList<Movable> herd;
+    
+    public Herd() {
+        this.herd = new ArrayList<>();
+    }
+    
+    public void addToHerd(Movable movable) {
+        this.herd.add(movable);
+    }
+    
+    public void move(int dx, int dy) {
+        for (Movable organism: this.herd) {
+            organism.move(dx, dy);
+        }
+    }
+    
+    public String toString() {
+        String string = "";
+        if (!this.herd.isEmpty()) {
+            for (Movable organism: this.herd) {
+                string += organism.toString() + "\n";
+            }
+        }
+        return string;
+    }
+      
+}
