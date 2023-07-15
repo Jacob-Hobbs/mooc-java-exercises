@@ -1,0 +1,188 @@
+import java.util.Scanner;
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Warehouse warehouse = new Warehouse();
+        warehouse.addProduct("coffee", 5, 10);
+        warehouse.addProduct("milk", 3, 20);
+        warehouse.addProduct("cream", 2, 55);
+        warehouse.addProduct("bread", 7, 8);
+
+        Scanner scanner = new Scanner(System.in);
+
+        Store store = new Store(warehouse, scanner);
+        store.shop("John");
+        
+    }
+}
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+
+public class Warehouse {
+    
+    private Map<String, Integer> productPriceMap;
+    private Map<String, Integer> productStockMap;
+    
+    public Warehouse() {
+        this.productPriceMap = new HashMap<>();
+        this.productStockMap = new HashMap<>();
+    }
+    
+    public void addProduct(String product, int price, int stock) {
+        this.productPriceMap.putIfAbsent(product, price);
+        this.productStockMap.putIfAbsent(product, stock);
+    }
+    
+    public int price(String product) {
+        int price = -99;
+
+        for (String item: this.productPriceMap.keySet()) {
+            if (item.equals(product)) {
+                price = this.productPriceMap.get(item);
+            }
+        }
+        return price;
+    }
+    
+    public int stock(String product) {
+        int stock = 0;
+        
+        for (String item: this.productStockMap.keySet()) {
+            if (item.equals(product)) {
+                stock = this.productStockMap.get(item);
+            }
+        }
+        return stock;
+    }
+    
+    public boolean take(String product) {
+        for (String item: this.productStockMap.keySet()) {
+            if (item.equals(product)) {
+                int newStock = this.productStockMap.get(item);
+                if (newStock - 1 >= 0){
+                    newStock--;
+                    this.productStockMap.replace(item, newStock);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public Set<String> products() {
+        return this.productPriceMap.keySet();
+    }
+    
+}
+
+public class Item {
+    
+    private String product;
+    private int qty;
+    private int unitPrice;
+    
+    public Item(String product, int qty, int unitPrice) {
+        this.product = product;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+    }
+    
+    public int price() {
+        int product = this.qty * this.unitPrice;
+        return product;
+    }
+    
+    public void increaseQuantity() {
+        this.qty++;
+    }
+    
+    public String toString() {
+        return this.product + ": " + this.qty;
+    }
+    
+}
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class ShoppingCart {
+    
+    private Map<String, Item> shoppingCart;
+    
+    public ShoppingCart() {
+        this.shoppingCart = new HashMap<>();
+    }
+    
+    public void add(String product, int price) {
+        
+        if (this.shoppingCart.keySet().contains(product)) {
+            this.shoppingCart.get(product).increaseQuantity();
+        } else {
+            this.shoppingCart.put(product, new Item(product, 1, price));
+        }
+    }
+    
+    public int price() {
+        int totalPrice = 0;
+        for (String item: this.shoppingCart.keySet()) {
+            totalPrice += this.shoppingCart.get(item).price();
+        }
+        return totalPrice;
+    }
+    
+    public void print() {
+        for (String item: this.shoppingCart.keySet()) {
+            System.out.println(this.shoppingCart.get(item).toString());
+        }
+    }
+     
+}
+
+import java.util.Scanner;
+
+public class Store {
+
+    private Warehouse warehouse;
+    private Scanner scanner;
+
+    public Store(Warehouse warehouse, Scanner scanner) {
+        this.warehouse = warehouse;
+        this.scanner = scanner;
+    }
+
+    // the method that handles the customers visit to the store.
+    public void shop(String customer) {
+        ShoppingCart cart = new ShoppingCart();
+        System.out.println("Welcome to the store " + customer);
+        System.out.println("our selection:");
+
+        for (String product : this.warehouse.products()) {
+            System.out.println(product);
+        }
+
+        while (true) {
+            System.out.print("What to put in the cart (press enter to go to the register): ");
+            String product = scanner.nextLine();
+            if (product.isEmpty()) {
+                break;
+            }
+
+            if (this.warehouse.products().contains(product)) {
+                cart.add(product, this.warehouse.price(product));
+                this.warehouse.take(product);
+            }
+
+        }
+
+        System.out.println("your shoppingcart contents:");
+        cart.print();
+        System.out.println("total: " + cart.price());
+    }
+}
