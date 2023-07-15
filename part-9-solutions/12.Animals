@@ -1,0 +1,102 @@
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Dog dog = new Dog();
+        dog.bark();
+        dog.eat();
+
+        Dog fido = new Dog("Fido");
+        fido.bark();
+        
+        System.out.println("");
+        
+        Cat cat = new Cat();
+        cat.purr();
+        cat.eat();
+
+        Cat garfield = new Cat("Garfield");
+        garfield.purr();
+        
+        System.out.println("");
+        
+        NoiseCapable doggie = new Dog();
+        doggie.makeNoise();
+
+        NoiseCapable kitty = new Cat("Garfield");
+        kitty.makeNoise();
+        Cat c = (Cat) kitty;
+        c.purr();
+
+    }
+
+}
+
+public abstract class Animal {
+    
+    private String name;
+    
+    public Animal(String name) {
+        this.name = name;
+    }
+    
+    public void eat() {
+        System.out.println(this.name + " eats");
+    }
+    
+    public void sleep() {
+        System.out.println(this.name + " sleeps");
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+}
+
+public class Dog extends Animal implements NoiseCapable {
+    
+    
+    public Dog() {
+        super("Dog");
+    }
+    
+    public Dog(String name) {
+        super(name);
+    }
+    
+    public void bark() {
+        System.out.println(super.getName() + " barks");
+    }
+    
+    public void makeNoise() {
+        this.bark();
+    }
+     
+}
+
+public class Cat extends Animal implements NoiseCapable {
+    
+    
+    public Cat(String name) {
+        super(name);
+    }
+    
+    public Cat() {
+        super("Cat");
+    }
+    
+    public void purr() {
+        System.out.println(this.getName() + " purrs");
+    }
+    
+    public void makeNoise() {
+        this.purr();
+    }
+}
+
+public interface NoiseCapable {
+    
+    void makeNoise();
+    
+}
