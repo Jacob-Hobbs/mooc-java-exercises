@@ -1,0 +1,118 @@
+public class Main {
+
+    public static void main(String[] args) {
+        Box box = new Box(10);
+        Box box2 = new Box(5);
+        Box newBox = new Box(30);
+
+        box.add(new Book("Fyodor Dostoevsky", "Crime and Punishment", 2)) ;
+        box.add(new Book("Robert Martin", "Clean Code", 1));
+        box.add(new Book("Kent Beck", "Test Driven Development", 0.7));
+
+        box.add(new CD("Pink Floyd", "Dark Side of the Moon", 1973));
+        box.add(new CD("Wigwam", "Nuclear Nightclub", 1975));
+        box.add(new CD("Rendezvous Park", "Closer to Being Here", 2012));
+        
+        box2.add(new Book("George Orwell", "1984", 1.75));
+        
+        newBox.add(box);
+        newBox.add(box2);
+
+        System.out.println(newBox);
+    }
+
+}
+
+public interface Packable {
+    
+    double weight();
+    
+}
+
+public class Book implements Packable {
+    
+    private String author;
+    private String bookName;
+    private double weight;
+    
+    
+    public Book(String author, String bookName, double weight) {
+        this.author = author;
+        this.bookName = bookName;
+        this.weight = weight;
+    }
+    
+    public double weight() {
+        return weight;
+    }
+    
+    @Override
+    public String toString() {
+        return this.author + ": " + this.bookName;
+    }
+    
+}
+
+public class CD implements Packable {
+    
+    private String artist;
+    private String cdName;
+    private int publicationYear;
+    private int weight;
+    
+    public CD(String artist, String cdName, int publicationYear) {
+        this.artist = artist;
+        this.cdName = cdName;
+        this.publicationYear = publicationYear;
+        this.weight = weight;
+    }
+    
+    public double weight() {
+        return 0.1;
+    }
+    
+    @Override
+    public String toString() {
+        return this.artist + ": " + this.cdName + " (" + this.publicationYear + ")";
+    }
+    
+}
+
+import java.util.ArrayList;
+
+
+public class Box implements Packable {
+    
+    private double maximumCapacity;
+    private ArrayList<Packable> list;
+    
+    public Box(double maximumCapacity) {
+        this.maximumCapacity = maximumCapacity;
+        this.list = new ArrayList<>();
+    }
+    
+    public void add(Packable packable) {
+        
+        if (this.maximumCapacity - (packable.weight() + weight()) >= 0) {
+            this.list.add(packable);
+        }
+    }
+    
+    public double weight() {
+        double weight = 0;
+        for (Packable item: this.list) {
+            weight += item.weight();
+        }
+        return weight;
+    }
+    
+    @Override
+    public String toString() {
+        int numOfItems = 0;
+        for (Packable item: this.list) {
+            numOfItems++;
+        }
+        return "Box: " + numOfItems + " items, total weight " + weight() + " kg";
+    }
+    
+}
