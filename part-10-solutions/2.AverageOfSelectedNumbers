@@ -1,0 +1,54 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AverageOfSelectedNumbers {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        ArrayList<String> list = new ArrayList<>();
+        
+        System.out.println("Input numbers, type \"end\" to stop.");
+        
+        while (true) {
+            String value = scanner.nextLine();
+            
+            if (value.equals("end")) {
+                break;
+            } else {
+                list.add(value);
+            }
+        }
+        
+        System.out.println("Print the average of the negative numbers or the positive numbers? (n/p)");
+        
+        String answer = scanner.nextLine();
+
+        double avg = 0;
+
+        if (list.isEmpty()) {
+            System.out.println("No numbers entered. Try again.");
+        
+        } else if (answer.equals("n")) {
+            double average = list.stream()
+                    .mapToInt(s -> Integer.valueOf(s))
+                    .filter(number -> number < 0)
+                    .average()
+                    .getAsDouble();
+            avg = average;
+            System.out.println("Average of the negative numbers: " + avg);
+        } else if (answer.equals("p")) {
+            double average = list.stream()
+                    .mapToInt(s -> Integer.valueOf(s))
+                    .filter(number -> number > 0)
+                    .average()
+                    .getAsDouble();
+            avg = average;
+            System.out.println("Average of the positive numbers: " + avg);
+        } else {
+            System.out.println("Wrong input. Try again later...");
+        }
+        
+    }
+}
