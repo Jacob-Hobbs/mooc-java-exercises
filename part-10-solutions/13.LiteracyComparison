@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+
+public class LiteracyComparison {
+    
+    public static void main(String[] args) {
+        
+        LiteracyDatum literacyDatum = new LiteracyDatum("", "", "female (%)", "Japan", 2014, 82.15105);
+        
+        
+        literacyDatum.readTextFile("literacy.csv");
+        
+    }
+}
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+
+public class LiteracyDatum {
+    
+    private String title;
+    private String population;
+    private String gender;
+    private String country;
+    private int year;
+    private double percentage;
+    private ArrayList<LiteracyDatum> literaryList;
+    
+    public LiteracyDatum (String title, String population, String gender, String country, int year, double percentage) {
+        this.title = "Adult literacy rate";
+        this.population = "population 15+ years";
+        this.gender = gender;
+        this.country = country;
+        this.year = year;
+        this.percentage = percentage;
+        this.literaryList = new ArrayList<>();
+    }
+    
+    public String getGender() {
+        return this.gender;
+    }
+    
+    public String getCountry() {
+        return this.country;
+    }
+    
+    public int getYear() {
+        return this.year;
+    }
+    
+    public double getPercentage() {
+        return this.percentage;
+    }
+    
+    public void readTextFile(String file) {
+        
+        try {
+
+            Files.lines(Paths.get("literacy.csv"))
+                    .map(x -> x.split(","))
+                    .sorted((x, y) -> x[5].compareTo(y[5]))
+                    .forEach(row -> System.out.println(row[3] + " (" + row[4] + "), " + row[2].split(" ")[1].trim() + ", " + row[5]));
+
+        } catch (Exception e) {
+
+            System.out.println("There was an issue reading the file " + e.getMessage());
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return this.country + " (" + this.year + "), " + this.gender + ", " +this.percentage;
+    }
+     
+    
+}
