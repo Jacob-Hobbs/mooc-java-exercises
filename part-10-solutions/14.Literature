@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class MainProgram {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int count = 0;
+        
+        ArrayList<Book> bookList = new ArrayList<>();
+        
+        while (true) {
+            System.out.println("Input the name of the book, empty stops: ");
+            String name = scanner.nextLine();
+            if (name.equals("")) {
+                break;
+            }
+            System.out.println("Input the age recommendation: ");
+            int age = Integer.valueOf(scanner.nextLine());
+            bookList.add(new Book(name, age));
+            count++;
+            
+            System.out.println("");
+        }
+        System.out.println("");
+        System.out.println(count + " books in total.");
+        System.out.println("");
+        System.out.println("Books:");
+        
+        
+        Comparator<Book> comparator = Comparator
+                .comparing(Book::getAge)
+                .thenComparing(Book::getName);
+        Collections.sort(bookList, comparator);
+        for (Book b: bookList) {
+            System.out.println(b);
+        }
+    }
+
+}
+
+import java.util.ArrayList;
+
+
+public class Book {
+    
+    private String name;
+    private int age;
+    private ArrayList<Book> bookList;
+    
+    public Book(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.bookList = new ArrayList<>();
+    }
+    
+    @Override
+    public String toString() {
+        return this.name + " (recommended for " + this.age + " year-olds or older)";
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public int getAge() {
+        return this.age;
+    }
+    
+}
