@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // you can test your program here
+
+    }
+}
+
+public interface Saveable {
+    
+    public void save();
+    
+    public void delete();
+    
+    public void load(String address);
+    
+}
+
+public class Person implements Saveable {
+    
+    private String name;
+    private String address;
+    
+    public void save() {
+        // Method action
+    }
+    
+    public void delete() {
+        // Method action
+    }
+    
+    public void load(String address) {
+        // Method action
+    }
+    
+}
