@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // you can test your classes here
+
+    }
+}
+
+public class Show {
+    
+    private String movie;
+    private String time;
+    
+}
+
+import java.util.ArrayList;
+
+
+public class Ticket {
+    
+    private int seat;
+    private int code;
+    private Show shows;
+    
+}
