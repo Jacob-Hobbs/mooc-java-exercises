@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // you can test your class here
+
+    }
+}
+
+public class Book {
+    
+    private String name;
+    private String author;
+    private int pageCount;
+    
+}
+
+public class Plane {
+    
+    private String ID;
+    private String model;
+    private int yearOfIntroduction;
+    
+}
