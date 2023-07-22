@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // you can test your classes here
+
+    }
+}
+
+public class Player {
+    
+    private String name;
+    
+    public void play() {
+        // Method actions
+    }
+    
+    public void printName() {
+        // Method actions
+    }
+    
+}
+
+public class Bot extends Player {
+    
+    public void play() {
+        // Method actions
+    }
+    
+    public void addMove(String move) {
+        // Method actions
+    }
+    
+}
