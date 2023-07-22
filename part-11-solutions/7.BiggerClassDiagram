@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class Program {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // you can test your classes here
+
+    }
+}
+
+public class A implements IA {
+    // Class definition
+}
+
+public class B extends A implements IB {
+    // Class definition    
+}
+
+import java.util.ArrayList;
+
+
+public class C extends B implements IC{
+    
+    private ArrayList<E> e;
+    
+}
+
+public class D {
+    
+    private IA ia;
+    
+}
+
+import java.util.ArrayList;
+
+
+public class E {
+    
+    private ArrayList<C> c;
+    
+}
+
+public interface IA {
+    
+}
+
+public interface IB {
+    
+}
+
+public interface IC {
+    
+}
